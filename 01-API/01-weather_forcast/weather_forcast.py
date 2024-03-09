@@ -96,16 +96,16 @@ class Weather(arcade.Window):
 
 
     def draw_forecast(self):
-        x = 20
-        y = self.height - 150
-        arcade.draw_text("Forecast for the next 3 days:", x, y, arcade.color.WHITE, font_size=15)
+        x = 70
+        y = self.height - 320
+        arcade.draw_text("Next 3 days:", x, y, arcade.color.WHITE, font_size=12)
         y -= 20
         for day_data in self.forecast:
             day = day_data['day']
             temperature = day_data['temperature']
             wind = day_data['wind']
             output = f"Day {day}: Temperature: {temperature}, Wind: {wind}"
-            arcade.draw_text(output, x, y, arcade.color.WHITE, font_size=12)
+            arcade.draw_text(output, x, y, arcade.color.WHITE, font_size=10)
             y -= 20
 
     def on_update(self, delta_time: float):
@@ -115,7 +115,7 @@ class Weather(arcade.Window):
     def draw_temperatur(self):
         output = f"Wind: {self.wind}   temperature {self.temperature} ."
         
-        arcade.draw_text(output, 100 , 100, arcade.color.WHITE, 10 )
+        arcade.draw_text(output, 100 , 150, arcade.color.WHITE, 10, bold=True )
   
 
     def on_key_press(self, key, modifiers):

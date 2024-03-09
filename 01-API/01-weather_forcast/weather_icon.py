@@ -7,7 +7,7 @@ class Icon(arcade.Sprite):
             self.width = 200
             self.height = 100
             self.center_x = 200
-            self.center_y = 200
+            self.center_y = 250
 
 
 
