@@ -1,13 +1,29 @@
 import requests
 import arcade
+import arcade.gui as gui
 from weather_icon import Sunny
 from weather_icon import Cloudy
 from weather_icon import Rainy
 from weather_icon import Snowy
+from shapely import speedups
+print(speedups.available)
 
 
+# class SearchButton(gui.UIFlatButton):
+#     def __init__(self, center_x, center_y, callback):
+#         super().__init__(
+#             center_x=center_x,
+#             center_y=center_y,
+#             text="Search",
+#             width=100,
+#             height=40,
+#             id=None,
+#         )
+#         self.callback = callback
 
-
+    # def on_click(self):
+    #     if self.callback:
+    #         self.callback()
 
 class Weather(arcade.Window):
     def __init__(self):
@@ -19,6 +35,16 @@ class Weather(arcade.Window):
         # self.snowy = Snowy()
         self.weather_icon = None
         self.city_input =""
+        self.search_box_width = 200
+        self.search_box_height = 30
+        self.search_box_x = 130
+        self.search_box_y = self.height - 60    
+
+        # self.search_button = SearchButton(
+        #     center_x=self.width // 2,
+        #     center_y=self.search_box_y - self.search_box_height - 50,
+        #     callback=self.fetch_weather
+        # )    
 
     def fetch_weather(self):
         city = self.city_input.lower()  # City for weather forecast
@@ -43,6 +69,9 @@ class Weather(arcade.Window):
             self.temperature = weather_data['temperature']
             self.wind = weather_data['wind']
             print(f"The current weather in {city} is {weather_description} with a temperature of {self.temperature} and wind speed of {self.wind}.")
+            
+            if 'forecast' in weather_data:
+                self.forecast = weather_data['forecast']
         else:
             print("Failed to fetch weather data.")
 
@@ -53,9 +82,31 @@ class Weather(arcade.Window):
         if self.weather_icon:
             self.weather_icon.draw()
             self.draw_temperatur()
+            self.draw_forecast()
 
         arcade.draw_text("Enter city:", 20, self.height - 50, arcade.color.WHITE, font_size=15)
-        arcade.draw_text(self.city_input, 120, self.height - 50, arcade.color.WHITE, font_size=15)
+       # arcade.draw_text(self.city_input, 120, self.height - 50, arcade.color.WHITE, font_size=15)
+
+        arcade.draw_xywh_rectangle_filled(self.search_box_x, self.search_box_y, self.search_box_width, self.search_box_height, arcade.color.WHITE)
+        arcade.draw_text(self.city_input, self.search_box_x + 10, self.search_box_y + 10, arcade.color.BLACK, font_size=15) 
+        # self.search_button.draw() 
+            
+
+
+
+
+    def draw_forecast(self):
+        x = 20
+        y = self.height - 150
+        arcade.draw_text("Forecast for the next 3 days:", x, y, arcade.color.WHITE, font_size=15)
+        y -= 20
+        for day_data in self.forecast:
+            day = day_data['day']
+            temperature = day_data['temperature']
+            wind = day_data['wind']
+            output = f"Day {day}: Temperature: {temperature}, Wind: {wind}"
+            arcade.draw_text(output, x, y, arcade.color.WHITE, font_size=12)
+            y -= 20
 
     def on_update(self, delta_time: float):
         ...
