@@ -1,12 +1,15 @@
 import requests
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import os
+import dotenv
+dotenv.load_dotenv()
 
-
+api = os.getenv("the_one_APIkey")
 headers = { 
-    "Authorization": f"Bearer {os.getenv("the_one_APIkey")}"
+    "Authorization": api
 }
 
 response = requests.get("https://the-one-api.dev/v2/movie", headers=headers)
-response.status_code
-response.json()
+print(f"Status code is: {response.status_code}")
+print("response is: ")
+print(response.json())

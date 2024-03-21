@@ -1,16 +1,23 @@
-
 import requests
 from dotenv import load_dotenv
 import os
 
-
-url = "https://api.iconfinder.com/v4/icons/search?query=arrow&count=10"
+load_dotenv()
+api = os.getenv("iconfinder_APIkey")
+url = "https://api.iconfinder.com/v4/icons/search"
 
 headers = {
     "accept": "application/json",
-    "Authorization": f"Bearer {os.getenv("iconfinder_API")} "
+    "Authorization": api
 }
 
-response = requests.get(url, headers=headers)
-response.status_code
-response.json()
+payload ={
+"querry": "arrow",
+"count": "10"
+}
+
+
+response = requests.get(url, headers=headers, params=payload)
+print(response.status_code)
+#print(response.text)
+print(response.json())
