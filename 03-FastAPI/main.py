@@ -1,18 +1,22 @@
 from fastapi import FastAPI, HTTPException,status
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
 
 
-Sabzeh = {"farsi":"سبزه", "English": "Wheat",  "symbol": "Rebirth and growth"}
-Samanu = {"farsi":"سمنو", "English": "Samanu", "Symbol": "power and strength"}
-Senjed = {"farsi":"سنجد", "English": "Senjed", "symbol": "love and affection"}
-Seer =   {"farsi": "سیر", "English": "Garlic", "Symbol": "medicine and health"}
-Seeb =   {"farsi": "سیب", "English": "Apple",  "symbol": "beauty and health."}
-Somaq =  {"farsi":"سماق", "English": "Somaq",  "symbol": "sunrise and morale"}
-Serkeh = {"farsi":"سرکه", "English": "Vinegar","symbol": "age and patience"}
+Sabzeh = {"farsi":"سبزه", "English": "Wheat",  "symbol": "Rebirth and growth", "image": "images/Sabzeh.jpg"}
+Samanu = {"farsi":"سمنو", "English": "Samanu", "Symbol": "power and strength", "image": "images/Samanu.jpg"}
+Senjed = {"farsi":"سنجد", "English": "Senjed", "symbol": "love and affection", "image": "images/Senjed.jpg"}
+Seer =   {"farsi": "سیر", "English": "Garlic", "Symbol": "medicine and health", "image": "images/Seer.jpg"}
+Seeb =   {"farsi": "سیب", "English": "Apple",  "symbol": "beauty and health.", "image": "images/Seeb.jpg"}
+Somaq =  {"farsi":"سماق", "English": "Somaq",  "symbol": "sunrise and morale", "image": "images/Somagh.jpeg"}
+Serkeh = {"farsi":"سرکه", "English": "Vinegar","symbol": "age and patience", "image": "images/Serkeh.jpg"}
 
 haftsin = [Sabzeh,Samanu,Senjed,Seer,Seeb,Somaq,Serkeh]
+
+app.mount("/images", StaticFiles(directory="images"), name="images")
 
 
 @app.get("/")
@@ -32,6 +36,14 @@ def get_item_info(item: str):
             return i
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found in 7sin! choose between: Wheat,Samanu,Senjed,Garlic,Apple,Somaq,Vinegar")
 
-
-# uvicorn fast_API:app --reload --port 2000 --host 0.0.0.0
+@app.get("/7sin/{item}/image")
+def show_image(item: str):
+    for i in haftsin:
+        if item == i["farsi"] or item == i["English"]:
+            return FileResponse(f"{i['image']}")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found in 7sin! choose between: Wheat,Samanu,Senjed,Garlic,Apple,Somaq,Vinegar")
     
+
+
+
+# uvicorn main:app --reload --port 2000 --host 0.0.0.0
