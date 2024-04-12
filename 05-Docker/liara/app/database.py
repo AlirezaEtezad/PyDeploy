@@ -2,7 +2,7 @@ import sqlite3
 
 class Database:
     def __init__(self):
-        self.con = sqlite3.connect("TodoList.db")
+        self.con = sqlite3.connect("app/TodoList.db")
         self.cursor = self.con.cursor()
     
 

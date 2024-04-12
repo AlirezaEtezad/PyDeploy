@@ -6,7 +6,7 @@ WORKDIR /code
 
 # 
 COPY ./requirements.txt /code/requirements.txt
-COPY ./TodoList.db /code/TodoList.db
+COPY ./app/TodoList.db /code/app/TodoList.db
 
 # 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
