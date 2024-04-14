@@ -2,6 +2,38 @@
 # To Do List API
 ![Screen Shot](screenshots/Screenshot.png)
 
+## Overview
+This is a Todo application built with FastAPI and SQLite. It provides a simple API for managing tasks.
+
+## Features
+- CRUD operations for tasks (Create, Read, Update, Delete)
+- SQLite database backend
+- Error handling for HTTP exceptions
+
+## Requirements
+- Python 3.x
+- FastAPI
+- SQLite3
+
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone <repository_url>
+   cd <repository_directory>
+
+## Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+* Start the FastAPI server:
+```
+uvicorn main:app --reload
+```
+
+## Using postman:
+
 #### get: /tasks
 it will show you all tasks and details.
 
