@@ -1,3 +1,5 @@
 fastapi
+pydantic
 uvicorn[standard]
 sqlalchemy
+psycopg2

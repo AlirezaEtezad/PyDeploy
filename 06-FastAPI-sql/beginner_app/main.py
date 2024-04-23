@@ -23,7 +23,7 @@ class User(Base):
     email = Column(String)
 
 
-Base.metadata.creat_all(bind=engine)  #creat tables
+Base.metadata.create_all(bind=engine)  #creat tables
 
 
 
@@ -45,6 +45,7 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return user
 
 
+
 @app.post("/users")
 def create_user(name: str, email: str, db: Session = Depends(get_db)):
    # db = SessionLocal()
@@ -60,4 +61,7 @@ def create_user(name: str, email: str, db: Session = Depends(get_db)):
 def remove_user(user_id: int, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.id == user_id).first()
     if user is None:
-        
+        raise HTTPException(status_code=404, detail="User not found")
+    db.delete(user)
+    db.commit()
+    return {"message": "User deleted successfully"}
