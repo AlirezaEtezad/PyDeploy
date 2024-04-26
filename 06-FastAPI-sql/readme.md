@@ -1,7 +1,7 @@
 # University Database API
 
 ## Overview
-This is a universoty database app using postgresql for recording students and their courses.
+This is a university database app using postgresql for recording students and their courses.
 
 ## Features
 - CRUD operations for students (Create, Read, Update, Delete)
