@@ -7,11 +7,17 @@ dotenv.load_dotenv()
 rhyme_api = os.getenv("ryhme_APIkey")
 
 
+word = input("یک کلمه جهت یافتن قافیه وارد کنید: ")
+state = input("نام یک استان را وارد کنید: ")
+city = input("نام یک شهر را وارد کنید: ")
+
+
 async def rhyme_finder():
-    word = input("یک کلمه جهت یافتن قافیه وارد کنید: ")
+
     url = f"https://rhyming.ir/api/rhyme-finder?api={rhyme_api}&w={word}&sb=1&mfe=2&eq=1"
     response = requests.request("GET", url)
     data = response.json()
+    print(f"هم قافیه های :{word}")
     for item in data["data_items"]:
         print(item["word"])
 
@@ -27,10 +33,11 @@ async def get_states():
 
 
 async def get_cities():
-    state = input("نام یک استان را وارد کنید: ")
+
+
     response = requests.get(f"https://iran-locations-api.ir/api/v1/fa/cities?state={state}")
     data = response.json()
-    print(data)
+   # print(data)
     for key, value in data.items():
         if key == 'cities':
             print(f"{key}:")
@@ -39,7 +46,7 @@ async def get_cities():
         else:
             print(f"{key}: {value}")
             
-    city = input("نام یک شهر را وارد کنید: ")
+
     cities = data['cities']
     for cit in cities:
         if cit['name'] == city:
@@ -52,6 +59,6 @@ async def get_coordiantes():
 
 
 async def main():
-    asyncio.gather(get_coordiantes(), rhyme_finder())
+    asyncio.gather(rhyme_finder(), get_coordiantes() )
 
 asyncio.run(main())
