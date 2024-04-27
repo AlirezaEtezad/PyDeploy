@@ -2,6 +2,7 @@ import requests
 import asyncio
 import dotenv
 import os
+import time
 
 dotenv.load_dotenv()
 rhyme_api = os.getenv("ryhme_APIkey")
@@ -61,4 +62,11 @@ async def get_coordiantes():
 async def main():
     asyncio.gather(rhyme_finder(), get_coordiantes() )
 
-asyncio.run(main())
+
+
+if __name__ == "__main__":
+    start_time = time.perf_counter()
+    asyncio.run(main())
+    end_time = time.perf_counter()
+    total_time = end_time - start_time
+    print(f"Total time : {total_time} seconds")   
