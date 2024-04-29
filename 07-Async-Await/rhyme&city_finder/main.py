@@ -51,7 +51,8 @@ async def get_cities():
     cities = data['cities']
     for cit in cities:
         if cit['name'] == input_city:
-            print(cit)
+            print(cit["latitude"],cit["longitude"])
+            return cit["latitude"], cit["longitude"]
 
 
 async def get_coordiantes():
