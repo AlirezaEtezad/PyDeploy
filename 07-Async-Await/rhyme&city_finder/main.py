@@ -10,7 +10,7 @@ rhyme_api = os.getenv("ryhme_APIkey")
 
 word = input("یک کلمه جهت یافتن قافیه وارد کنید: ")
 state = input("نام یک استان را وارد کنید: ")
-city = input("نام یک شهر را وارد کنید: ")
+input_city = input("نام یک شهر را وارد کنید: ")
 
 
 async def rhyme_finder():
@@ -50,7 +50,7 @@ async def get_cities():
 
     cities = data['cities']
     for cit in cities:
-        if cit['name'] == city:
+        if cit['name'] == input_city:
             print(cit)
 
 
@@ -60,7 +60,7 @@ async def get_coordiantes():
 
 
 async def main():
-    asyncio.gather(rhyme_finder(), get_coordiantes() )
+    asyncio.gather(get_coordiantes(), rhyme_finder())
 
 
 
