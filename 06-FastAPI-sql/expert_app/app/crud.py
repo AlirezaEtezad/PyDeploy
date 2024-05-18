@@ -12,9 +12,6 @@ def get_student_by_lastname(db: Session, lastname: str):
     return db.query(models.Student).filter(models.Student.lastname == lastname).first()
 
 
-
-
-
 def create_student(db: Session, student: schemas.StudentCreate):
     db_student = models.Student(firstname = student.firstname, lastname = student.lastname, average = student.average, graduated = student.graduated)
     db.add(db_student)
@@ -22,9 +19,9 @@ def create_student(db: Session, student: schemas.StudentCreate):
     db.refresh(db_student)
     return db_student
 
+
 def get_courses(db: Session, skip: int = 0, limit: int =100):
     return db.query(models.Course).offset(skip).limit(limit).all()
-
 
 
 
@@ -34,6 +31,7 @@ def create_student_course(db: Session, Course: schemas.CourseCreate, student_id:
     db.commit()
     db.refresh(db_course)
     return db_course
+
 
 
 def remove_student_id(id: int , db: Session):
