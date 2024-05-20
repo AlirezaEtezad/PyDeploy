@@ -6,7 +6,7 @@ This is a chatbot powerd by streamlit and sqlite.
 
 
 ## Enter ChatBot Folder:
-It is stupidly just Does 3X to your messages.
+It is an outdated chatbot!!
 
 
 
