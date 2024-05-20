@@ -1,7 +1,10 @@
 from sqlmodel import SQLModel, Session, create_engine, select
 from models import User, Message, Optional
 
+
 DATABASE_URL = "sqlite:///database.db"
+# DATABASE_URL = "postgresql://admin:123-localhost:5432/chatbotdb"
+# DATABASE_URL = "postgresql://root:YBfURfdyej4NgjOhVN1k0Q1Z@aaa:5432/postgres"
 engine = create_engine(DATABASE_URL)
 
 def create_db_and_tables():

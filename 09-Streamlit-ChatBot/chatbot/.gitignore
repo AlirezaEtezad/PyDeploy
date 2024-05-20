@@ -1,0 +1,5 @@
+.env
+debug.log
+__pycache__
+edenai.py
+

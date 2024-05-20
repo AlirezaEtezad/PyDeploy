@@ -1,77 +1,18 @@
-# import streamlit as st
-# from sqlmodel import Field, Session, SQLModel, create_engine, select, Relationship
-# from models import User, Message
-
-
-
-# @st.cache_resource
-# def database_connection():
-#     engine = create_engine("sqlite:///database.db")
-#     SQLModel.metadata.create_all(engine)
-#     return engine
-
-# engine = database_connection()
-
-# def ai(user_text_message):
-#     ai_text_message = user_text_message * 3
-#     return ai_text_message
-    
-
-# def process(user_text_message):
-
-#     ai_text_message = ai(user_text_message)
-
-#     user_message = Message(text=user_text_message, type="user", user_id=1)
-#     ai_message = Message(text=ai_text_message, type="ai", user_id=1)
-
-
-
-
-#     # backend
-
-
-
-#     with Session(engine) as session:
-#         session.add(user_message)
-#         session.add(ai_message)
-#         session.commit()
-
-
-
-#     # frontend
-#     st.session_state.messages.append({'type': 'user', 'text': user_text_message})
-#     st.session_state.messages.append({'type': 'ai', 'text': ai_text_message})  
-#     return ai_text_message
-
-# if "messages" not in st.session_state:
-#     st.session_state.messages = []
-
-
-# for message in st.session_state.messages:
-#     with st.chat_message(message["type"]):
-#         st.write(message["text"])
-
-
-
-
-
-# if user_text_message := st.chat_input("Send a new message ..."):
-
-#     ai_text_message = process(user_text_message)
-
-
-#     with st.chat_message("User"):
-#         st.write(user_text_message)
-
-#     with st.chat_message("ai"):
-#         st.write(ai_text_message)
-
-
-
+# from dotenv import load_dotenv
+# import os
 import streamlit as st
 from sqlmodel import Session
+import requests
+import json
 from models import User, Message
 from database import create_db_and_tables, engine, create_user, authenticate_user, select
+
+
+
+
+# load_dotenv()
+# api_key = os.getenv("API_EdenAI")
+api_key = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYjZjZGRiMDctOWJkMC00YWQxLTg0YTYtMGNlYTkzYjEwYTI0IiwidHlwZSI6ImFwaV90b2tlbiJ9.xOO_tymL2zwe4a4_DWQ3GbfrPmzOR8O_p445aVWIneM"
 
 
 # Initialize database
@@ -83,12 +24,46 @@ def database_connection():
 
 engine = database_connection()
 
-def ai(user_text_message):
-    ai_text_message = user_text_message * 3
-    return ai_text_message
+
+
+
+import requests
+
+def get_edenai_response(prompt: str) -> str:
+
+
+    headers = {"Authorization": api_key}
+    url = "https://api.edenai.run/v2/text/chat"
+    payload = {
+        "providers": "openai",
+        "text": prompt,
+        "chatbot_global_action": "Act as an assistant",
+        "previous_history": [],
+        "temperature": 0.0,
+        "max_tokens": 150,
+        "fallback_providers": "OpenAI - gpt-3.5-turbo, OpenAI - gpt-3.5-turbo-1106, OpenAI ,  OpenAI - gpt-3.5-turbo-0301"
+    }
+    response = requests.post(url,json=payload, headers=headers)
+    result = json.loads(response.text)
+    generated_text = result['openai']['generated_text']
+    # print(result['openai']['generated_text'])
+    print(result)
+    
+    if response.status_code == 200:
+       # return response.json()["answer"]
+        return generated_text
+    else:
+        error_message = f"Error: {response.status_code} - {response.text}"
+        print(error_message)
+        return "Error: Unable to fetch response from Eden AI"
+
+
+# def ai(user_text_message):
+#     ai_text_message = user_text_message * 3
+#     return ai_text_message
 
 def process(user_text_message, user_id):
-    ai_text_message = ai(user_text_message)
+    ai_text_message = get_edenai_response(user_text_message)
     user_message = Message(text=user_text_message, type="user", user_id=user_id)
     ai_message = Message(text=ai_text_message, type="ai", user_id=user_id)
 
@@ -156,4 +131,4 @@ if st.session_state.user:
             st.write(user_text_message)
 
         with st.chat_message("ai"):
-            st.write(ai(user_text_message))
+            st.write(get_edenai_response(user_text_message))

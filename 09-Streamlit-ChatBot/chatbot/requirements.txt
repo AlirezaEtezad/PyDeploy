@@ -1,2 +1,5 @@
 streamlit
 passlib
+sqlmodel
+requests
+dotenv
