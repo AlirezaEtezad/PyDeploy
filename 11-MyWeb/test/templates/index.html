@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <img src="static/images/me.jpg" width="400">
+    
+</head>
+
+<body>
+
+<p>Hello {{ name }} from HTML</p>
+<p>I am {{x}} years old. </p>
+
+<ul>
+    {% for item in media %}    
+    <li> {{ item }} </li>
+    {% endfor %}
+
+
+</ul>
+
+<a href="/download">Download Page</a>
+
+</body>
+</html>

@@ -14,7 +14,7 @@ It is an outdated chatbot!!
 
 #### Install requiremenst:
 ```
-pip install -r requiremnts.txt
+pip install -r requirements.txt
 ```
 #### Run the program:
 ```
