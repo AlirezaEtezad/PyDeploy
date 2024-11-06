@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Face Analyzing App{% endblock %}
+
+{% block content %}
+
+
+
+<div class="card text-bg-dark">
+  <img src="{{url_for('static',filename= 'images/ai-background.jpg') }}" class="card-img" alt="...">
+  <div class="card-img-overlay">
+    <h5 class="card-title">Analyze Your World.</h5>
+    <p class="card-text">This is an Analyzing web app with amzing features.</p>
+    <p class="card-text"><small>Register and login to use the features.</small></p>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
+
