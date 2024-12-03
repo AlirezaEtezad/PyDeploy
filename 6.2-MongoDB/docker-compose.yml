@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+
+  onnx-service:
+    build:
+      context: ./onnx
+    container_name: onnx-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+    volumes:
+      - ./onnx:/app   # Bind mount for ONNX service code
+
+  flask-app:
+    build:
+      context: ./flask_app
+    container_name: flask-app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+      - onnx-service
+    volumes:
+      - ./flask_app:/app   # Bind mount for Flask app code
+
+
+
+volumes:
+  mongo_data:
