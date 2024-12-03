@@ -10,6 +10,7 @@ This is a Real Estate API built with Flask that provides various endpoints for m
 - Fetch all users in the system.
 
 ## Endpoints
+URL: http://127.0.0.1
 
 ### 1. **GET /** - Welcome Message
 Returns a simple welcome message.
@@ -52,4 +53,10 @@ token
 
 ### 8. **GET /** users - List All Users
 Fetches a list of all users in the system.
+
+## Dockerized
+Simply run:
+```
+docker-compuse up
+```
 
