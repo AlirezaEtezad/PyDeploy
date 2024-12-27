@@ -9,7 +9,7 @@ This project demonstrates how to integrate **FastAPI** with **Celery** for handl
 - FastAPI
 - Celery
 
-## Endpints
+## Endpoints
 
 /start
 
